@@ -46,12 +46,12 @@ export const post = async ({ request }) => {
 		nodemailer1 = await transporter.sendMail(mailData1);
 	} catch (error) {
 		console.log(error);
-		return { status: 200, body: { success: false } };
+		return { status: 500 };
 	}
 
 	if (nodemailer0.accepted[0] !== sender) {
-		return { status: 200, body: { success: false } };
+		return { status: 500 };
 	}
 
-	return { status: 200, body: { success: true } };
+	return { status: 200 };
 };

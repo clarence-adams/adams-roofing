@@ -12,6 +12,7 @@
 	// form
 	let formIncomplete = false;
 	let disabled = false;
+
 	// inputs
 	let inputs = ['name', 'email'];
 
@@ -19,6 +20,7 @@
 	let sent = false;
 	let textColor = 'text-black';
 	let bgColor = 'bg-amber-600';
+	let error = false;
 
 	const formHandler = (e) => {
 		e.preventDefault();
@@ -42,13 +44,13 @@
 		fetch('/api/form', {
 			method: 'POST',
 			body: formData
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.success) {
-					sent = true;
-				}
-			});
+		}).then((res) => {
+			sent = true;
+
+			if (!res.ok) {
+				error = true;
+			}
+		});
 	};
 </script>
 
@@ -110,6 +112,22 @@
 			{/if}
 		</button>
 	{:else if sent}
-		<p class="rounded-lg border-2 border-green-300 bg-green-100 p-2.5">Message sent!</p>
+		{#if !error}
+			<p
+				in:slide|local={{ delay: delay, duration: duration }}
+				out:slide|local={{ delay: 0, duration: duration }}
+				class="rounded-lg border-2 border-green-300 bg-green-100 p-2.5"
+			>
+				Message sent!
+			</p>
+		{:else}
+			<p
+				in:slide|local={{ delay: delay, duration: duration }}
+				out:slide|local={{ delay: 0, duration: duration }}
+				class="mb-4 rounded-lg border-2 border-red-400 bg-red-100 p-2 font-semibold"
+			>
+				An error occurred, try again later.
+			</p>
+		{/if}
 	{/if}
 </form>
