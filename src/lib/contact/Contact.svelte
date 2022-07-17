@@ -4,9 +4,9 @@
 
 <div
 	id="contact-wrapper"
-	class="relative left-1/2 mb-32 flex max-w-6xl -translate-x-1/2 flex-col items-center justify-start rounded-lg bg-white p-8 shadow sm:mb-16"
+	class="relative left-1/2 mb-32 flex w-[300px] -translate-x-1/2 flex-col items-center justify-start rounded-lg border-amber-600 bg-white p-8 shadow sm:mb-16 sm:w-[350px]"
 >
-	<div class="flex flex-col gap-4">
+	<div class="flex w-full flex-col gap-4">
 		<ContactForm />
 	</div>
 </div>

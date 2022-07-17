@@ -1,50 +1,24 @@
 <script>
-	import { onMount, onDestroy } from 'svelte';
-	import { spring } from 'svelte/motion';
-	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import capitalize from '$lib/utils/capitalize.js';
 	import Label from '$lib/tags/Label.svelte';
 	import Input from '$lib/tags/Input.svelte';
 	import Textarea from '$lib/tags/Textarea.svelte';
 
+	// slide options
+	const delay = 250;
+	const duration = 250;
+
 	// form
-	let form;
-	let formWidth;
-	let formButton;
 	let formIncomplete = false;
 	let disabled = false;
 	// inputs
 	let inputs = ['name', 'email'];
 
-	// button
-	let buttonRect;
-	let buttonHeight;
-	let buttonWidth;
-	let buttonSpring;
-	let buttonText = 'Send Message';
-
-	// loading bar
-	let loadingBarWrapper;
-	let loadingBarWidth = spring(0);
-	loadingBarWidth.stiffness = 0.04;
-	let loadingBarText = 'Sending message...';
-	let loadingBarBorder = 'border-stone-300';
-
 	let clicked = false;
 	let sent = false;
-	let textColor = 'text-[#000]';
+	let textColor = 'text-black';
 	let bgColor = 'bg-amber-600';
-
-	onMount(() => {
-		buttonRect = formButton.getBoundingClientRect();
-		buttonWidth = buttonRect.width;
-		buttonHeight = buttonRect.height + 'px';
-		buttonSpring = spring(buttonWidth);
-	});
-
-	let fetchTimeout;
-	let buttonTimeout;
-	let loadingBarTimeout;
 
 	const formHandler = (e) => {
 		e.preventDefault();
@@ -61,7 +35,6 @@
 		formIncomplete = false; // remove form incomplete notification
 		clicked = true; // starts button text fade
 		disabled = true; // disabled form inputs and submit button
-		buttonSpring.set(formWidth); // increases button width to match loading bar
 		textColor = 'text-white';
 		bgColor = 'bg-storm';
 
@@ -72,40 +45,14 @@
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				if (!data.success) {
-					fetchTimeout = setTimeout(() => {
-						loadingBarText = 'Error, try again later';
-						loadingBarBorder = 'border-red-500';
-					}, 2000);
-				} else {
-					buttonHeight = 'auto';
-					fetchTimeout = setTimeout(() => {
-						loadingBarText = `Message sent! Check ${email} for a confirmation email!`;
-						loadingBarBorder = 'border-green-400';
-					}, 2000);
+				if (data.success) {
+					sent = true;
 				}
 			});
-
-		// begin button fade
-		buttonTimeout = setTimeout(() => {
-			sent = true;
-		}, 500);
-
-		// begin loading bar loading animation
-		loadingBarTimeout = setTimeout(() => {
-			loadingBarWidth.set(loadingBarWrapper.getBoundingClientRect().width);
-		}, 1250);
-		buttonText = '';
 	};
-
-	onDestroy(() => {
-		clearTimeout(fetchTimeout);
-		clearTimeout(buttonTimeout);
-		clearTimeout(loadingBarTimeout);
-	});
 </script>
 
-<form bind:this={form} bind:clientWidth={formWidth} id="form" on:submit={formHandler}>
+<form id="form" on:submit={formHandler} class="w-full">
 	<fieldset class="flex flex-col items-start justify-center">
 		{#each inputs as input}
 			<Label labelFor={input}>{capitalize(input)}</Label>
@@ -115,25 +62,23 @@
 		<Textarea name="message" id="message" {disabled} />
 	</fieldset>
 	{#if formIncomplete}
-		<div
-			style={`width: ${formWidth}px`}
-			class="mb-4 rounded-lg border-2 border-red-500 p-2 font-semibold"
+		<p
+			in:slide|local={{ delay: delay, duration: duration }}
+			out:slide|local={{ delay: 0, duration: duration }}
+			class="mb-4 rounded-lg border-2 border-red-400 bg-red-100 p-2 font-semibold"
 		>
 			Form is incomplete. Please fill out all forms and try again.
-		</div>
+		</p>
 	{/if}
 	{#if !sent}
 		<button
-			bind:this={formButton}
 			{disabled}
-			style={`width: ${$buttonSpring}px; height: ${buttonHeight};`}
 			type="submit"
 			class="flex rounded-lg p-2.5 text-left {textColor} font-bold {bgColor}
-			active:bg-storm hover:bg-amber-700 disabled:bg-stone-200"
+			hover:bg-amber-700 disabled:border-2 disabled:border-stone-200 disabled:bg-stone-100"
 		>
 			{#if !clicked}
 				<svg
-					transition:fade
 					xmlns="http://www.w3.org/2000/svg"
 					width="16"
 					height="16"
@@ -145,21 +90,26 @@
 						d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"
 					/>
 				</svg>
-				<span transition:fade class="whitespace-nowrap">{buttonText}</span>
+				<span class="whitespace-nowrap">Send Message</span>
+			{:else}
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					width="20"
+					height="20"
+					fill="currentColor"
+					class="mt-1 mr-1"
+				>
+					<circle
+						cx="10"
+						cy="10"
+						r="8"
+						stroke-dasharray="40"
+						class="origin-center animate-spin fill-transparent stroke-amber-600 stroke-2"
+					/>
+				</svg>
 			{/if}
 		</button>
 	{:else if sent}
-		<div
-			bind:this={loadingBarWrapper}
-			style={`width: ${$buttonSpring}px; height: ${buttonHeight};`}
-			class={`rounded-lg relative inline-block p-2 font-semibold border-2 
-			${loadingBarBorder}`}
-		>
-			<div
-				style={`width: calc(${$loadingBarWidth}px - 4px)`}
-				class="bg-storm absolute top-0 left-0 h-full"
-			/>
-			<span transition:fade class="relative z-10">{loadingBarText}</span>
-		</div>
+		<p class="rounded-lg border-2 border-green-300 bg-green-100 p-2.5">Message sent!</p>
 	{/if}
 </form>

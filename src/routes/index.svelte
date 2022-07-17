@@ -9,7 +9,9 @@
 		'Standing seam roofs',
 		'Flat seam roofs',
 		'Copper box gutters',
-		'Chimney flashing'
+		'Chimney flashing',
+		'Copper half round gutters',
+		'Sheet metal fabrication'
 	];
 	const images = ['/images/hero.jpg', '/images/hero.jpg', '/images/hero.jpg'];
 </script>
@@ -38,7 +40,7 @@
 		<LandingCardWrapper flyIn={true} delay={2000}>
 			<h2 class="mb-4 text-center text-xl font-bold">What we do</h2>
 			<div class="flex justify-center">
-				<ul class="grid grid-cols-2 gap-x-8">
+				<ul class="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
 					{#each services as service}
 						<Li>{service}</Li>
 					{/each}
@@ -54,6 +56,7 @@
 				class="absolute left-1/2 bottom-16 h-8 w-8 -translate-x-1/2 transform text-white"
 				viewBox="0 0 16 16"
 			>
+				<circle cx="8" cy="8" r="8" class="fill-amber-600" />
 				<path
 					d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"
 				/>
@@ -63,7 +66,7 @@
 </div>
 
 <!-- Portfolio -->
-<section id="portfolio" class="scroll-mt-24 px-8 sm:px-16 2xl:px-64">
+<section id="portfolio" class="scroll-mt-28 px-8 sm:px-16 2xl:px-64">
 	<h2 class="mb-16 text-center text-2xl font-bold">Projects we've completed</h2>
 	<Carousel {images} />
 </section>
@@ -76,7 +79,7 @@
 
 <style>
 	#landing {
-		height: calc(100vh - theme(spacing.16));
+		min-height: calc(100vh - theme(spacing.16));
 	}
 
 	#fader {

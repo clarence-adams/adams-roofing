@@ -1,4 +1,4 @@
-<li>
+<li class="mb-2 text-lg">
 	<span class="flex items-start gap-1">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
