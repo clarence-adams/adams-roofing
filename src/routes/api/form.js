@@ -2,6 +2,7 @@ import nodemailer from 'nodemailer';
 
 const sender = import.meta.env.VITE_EMAIL;
 const password = import.meta.env.VITE_EMAIL_PASS;
+const recipient = import.meta.env.VITE_EMAIL_RECIPIENT;
 
 // create reusable transporter object using the default SMTP transport
 const transporter = nodemailer.createTransport({
@@ -17,7 +18,7 @@ export const post = async ({ request }) => {
 
 	const mailData0 = {
 		from: sender, // sender address
-		to: sender, // list of receivers
+		to: recipient, // list of receivers
 		replyTo: body.get('email'),
 		subject: 'New contact',
 		text: `name: ${body.get('name')} \nemail: ${body.get('email')} \n\nmessage: ${body.get(
