@@ -7,7 +7,7 @@
 	style:transform={flyIn ? 'translateY(75%)' : ''}
 	style:opacity={flyIn ? '0%' : '100%'}
 	style:animation-delay={flyIn ? `${delay}ms` : ''}
-	class="max-w-6xl rounded-lg border-2 border-amber-600 bg-black/75 p-8 text-white shadow"
+	class="max-w-6xl rounded-lg border-2 border-amber-600 bg-black/80 p-8 text-white shadow"
 >
 	<slot />
 </div>

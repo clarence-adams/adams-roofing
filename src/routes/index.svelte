@@ -28,7 +28,6 @@
 		alt=""
 		class="absolute top-0 h-full w-full object-cover object-center"
 	/>
-	<div id="fader" class="aboslute top-0 z-40 h-full w-full bg-black opacity-0" />
 	<section
 		class="absolute top-0 z-40 flex h-full w-full flex-col items-center gap-16 p-4 pt-16 sm:p-16 2xl:px-64"
 	>
@@ -80,20 +79,5 @@
 <style>
 	#landing {
 		min-height: calc(100vh - theme(spacing.16));
-	}
-
-	#fader {
-		animation: 500ms ease-in 500ms fade;
-		animation-fill-mode: forwards;
-
-		@keyframes fade {
-			from {
-				opacity: 0%;
-			}
-
-			to {
-				opacity: 33.33%;
-			}
-		}
 	}
 </style>
