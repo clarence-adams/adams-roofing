@@ -28,7 +28,7 @@
 		alt=""
 		class="absolute top-0 h-full w-full object-cover object-center"
 	/>
-	<section class="z-40 flex h-full w-full flex-col items-center gap-16 p-4 pt-16 sm:p-16 2xl:px-64">
+	<section class="z-40 flex h-full w-full flex-col items-center gap-16 px-4 py-8 sm:p-16 2xl:px-64">
 		<LandingCardWrapper flyIn={true} delay={1000}>
 			<h1 class="text-2xl font-bold">
 				Copper roofing specialists serving Lexington KY and surrounding areas
@@ -68,7 +68,7 @@
 </div>
 
 <!-- Portfolio -->
-<section id="portfolio" class="scroll-mt-28 px-8 sm:px-16 2xl:px-64">
+<section id="portfolio" class="scroll-mt-28 px-4 sm:px-16 2xl:px-64">
 	<h2 class="mb-16 text-center text-2xl font-bold">Projects we've completed</h2>
 	<Carousel {images} />
 </section>
