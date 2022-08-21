@@ -10,6 +10,6 @@
 	<nav />
 </header>
 
-<main class="relative flex flex-col  items-center gap-16 bg-stone-100 pt-16 text-stone-900">
+<main class="relative flex w-full flex-col items-center gap-16 bg-stone-100 pt-16 text-stone-900">
 	<slot />
 </main>
