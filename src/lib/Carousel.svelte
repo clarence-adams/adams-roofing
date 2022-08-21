@@ -37,19 +37,25 @@
 	};
 </script>
 
-<div class="relative">
+<div class="relative w-full">
 	<div
 		bind:this={carousel}
-		class="flex h-full w-full max-w-6xl snap-x snap-mandatory overflow-x-auto rounded-lg"
+		class="flex h-full w-full max-w-6xl snap-x snap-mandatory overflow-x-auto rounded-lg bg-black/50 sm:h-[600px]"
 	>
 		{#each images as image, i}
-			<img id={i} src={image} alt="" class="h-full w-full flex-shrink-0 snap-center object-cover" />
+			<img
+				id={i}
+				src={image}
+				alt=""
+				loading="lazy"
+				class="h-full w-full flex-shrink-0 snap-center object-contain"
+			/>
 		{/each}
 	</div>
 
 	<!-- Controls -->
 	<div
-		class="absolute bottom-0 flex h-8 w-full items-center justify-between rounded-b-lg bg-black/50 px-8 sm:h-16"
+		class="absolute bottom-0 flex h-8 w-full items-center justify-between rounded-b-lg bg-black/50 px-4 sm:h-16 sm:px-8"
 	>
 		<button on:click={scrollLeft}>
 			<svg
@@ -68,7 +74,8 @@
 		</button>
 
 		<!-- Dots -->
-		<div class="flex gap-8">
+		<!--
+		<div class="flex w-full justify-between px-2 sm:px-8">
 			{#each images as image, i}
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
 					<circle
@@ -81,6 +88,7 @@
 				</svg>
 			{/each}
 		</div>
+		-->
 
 		<button on:click={scrollRight}>
 			<svg

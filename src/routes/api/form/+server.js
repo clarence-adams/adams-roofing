@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 	}
 });
 
-export const post = async ({ request }) => {
+export const POST = async ({ request }) => {
 	const body = await request.formData();
 
 	const mailData0 = {
@@ -46,12 +46,18 @@ export const post = async ({ request }) => {
 		nodemailer1 = await transporter.sendMail(mailData1);
 	} catch (error) {
 		console.log(error);
-		return { status: 500 };
+		return new Response(null, {
+			status: 500
+		});
 	}
 
 	if (nodemailer0.accepted[0] !== sender) {
-		return { status: 500 };
+		return new Response(null, {
+			status: 500
+		});
 	}
 
-	return { status: 200 };
+	return new Response(null, {
+		status: 200
+	});
 };

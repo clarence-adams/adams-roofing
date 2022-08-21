@@ -45,6 +45,7 @@
 			method: 'POST',
 			body: formData
 		}).then((res) => {
+			console.log(res);
 			sent = true;
 
 			if (!res.ok) {

@@ -4,8 +4,9 @@
 	import Li from '$lib/tags/Li.svelte';
 	import Carousel from '$lib/Carousel.svelte';
 	import Contact from '$lib/contact/Contact.svelte';
-
-	const services = [
+	const IMAGE_COUNT = 28;
+	// services that show up over the hero image
+	const SERVICES = [
 		'Standing seam roofs',
 		'Flat seam roofs',
 		'Copper box gutters',
@@ -13,7 +14,11 @@
 		'Copper half round gutters',
 		'Sheet metal fabrication'
 	];
-	const images = ['/images/hero.jpg', '/images/hero.jpg', '/images/hero.jpg'];
+	// images for portfolio gallery
+	const IMAGES = [];
+	for (let i = 0; i < IMAGE_COUNT; i++) {
+		IMAGES.push(`/images/portfolio/gallery${i}.jpg`);
+	}
 </script>
 
 <svelte:head>
@@ -23,24 +28,29 @@
 
 <!-- Landing -->
 <div id="landing" class="relative w-full">
+	<!-- Hero Image -->
 	<img
 		src="/images/hero.jpg"
 		alt=""
 		class="absolute top-0 h-full w-full object-cover object-center"
 	/>
+
+	<!-- Landing Content -->
 	<section class="z-40 flex h-full w-full flex-col items-center gap-16 px-4 py-8 sm:p-16 2xl:px-64">
+		<!-- Blurb -->
 		<LandingCardWrapper flyIn={true} delay={1000}>
 			<h1 class="text-2xl font-bold">
 				Copper roofing specialists serving Lexington KY and surrounding areas
 			</h1>
 		</LandingCardWrapper>
 
+		<!-- Services -->
 		<LandingCardWrapper flyIn={true} delay={2000}>
 			<h2 class="mb-4 text-center text-2xl font-bold">Services we offer</h2>
 
 			<div class="flex justify-center">
 				<ul class="grid grid-cols-1 gap-x-8 sm:grid-cols-2">
-					{#each services as service}
+					{#each SERVICES as service}
 						<Li>{service}</Li>
 					{/each}
 				</ul>
@@ -70,11 +80,10 @@
 <!-- Portfolio -->
 <section id="portfolio" class="scroll-mt-28 px-4 sm:px-16 2xl:px-64">
 	<h2 class="mb-16 text-center text-2xl font-bold">Projects we've completed</h2>
-	<Carousel {images} />
+	<Carousel images={IMAGES} />
 </section>
 
 <!-- Contact -->
-
 <section>
 	<Contact />
 </section>
